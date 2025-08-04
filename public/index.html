@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mark Washers</title>
+    <link rel="icon" href="logo.png" type="image/png"> 
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+   
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-car"></i>
+                <span>Happy Gaadi = Happy Sawari</span>
+            </div>
+            <div class="nav-stats">
+                <div class="stat-item">
+                    <i class="fas fa-clock"></i>
+                    <span id="currentTime">00:00</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-list"></i>
+                    <span id="queueCount">0</span> in queue
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="hero-section">
+            <h1 class="main-title">
+                <span class="gradient-text">Mark Washers</span>
+                <br>
+                <span class="subtitle">Management System</span>
+            </h1>
+        </div>
+
+        <div class="content-grid">
+            <div class="card form-card">
+                <div class="card-header">
+                    <i class="fas fa-plus-circle"></i>
+                    <h2>Select your Vehicle</h2>
+                </div>
+                <form id="vehicleForm">
+                    <div class="vehicle-type-selector">
+                        <input type="radio" id="car" name="vehicleType" value="Car" required>
+                        <label for="car" class="vehicle-option">
+                            <i class="fas fa-car-side"></i>
+                            <span>Car</span>
+                            <small>PKR 500</small>
+                        </label>
+                        
+                        <input type="radio" id="bike" name="vehicleType" value="Bike" required>
+                        <label for="bike" class="vehicle-option">
+                            <i class="fas fa-motorcycle"></i>
+                            <span>Bike</span>
+                            <small>PKR 300</small>
+                        </label>
+                        
+                        <input type="radio" id="truck" name="vehicleType" value="Truck" required>
+                        <label for="truck" class="vehicle-option">
+                            <i class="fas fa-truck"></i>
+                            <span>Truck</span>
+                            <small>PKR 800</small>
+                        </label>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-id-card"></i>
+                        <input type="text" id="numberPlate" placeholder="Enter Vehicle Number" required>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <span>Add to Queue</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </form>
+            </div>
+
+            <div class="queue-container">
+                <div class="queue-header">
+                    <h2><i class="fas fa-stream"></i> Live Queue</h2>
+                    <div class="filter-tabs">
+                        <button class="filter-tab active" onclick="filterQueue('all')">All</button>
+                        <button class="filter-tab" onclick="filterQueue('Pending')">Active</button>
+                        <button class="filter-tab" onclick="filterQueue('Completed')">Completed</button>
+                    </div>
+                </div>
+                
+                <div id="queueList" class="queue-list">
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <p>No vehicles in queue</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="receiptModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-receipt"></i> Receipt</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="receipt-body">
+                <div class="receipt-logo">
+                    <i class="fas fa-car"></i>
+                    <h3>Mark Washers</h3>
+                </div>
+                <div id="receiptContent"></div>
+                <div class="receipt-footer">
+                    <p>Thank you for choosing us!</p>
+                    <button onclick="window.print()" class="print-btn">
+                        <i class="fas fa-print"></i> Print Receipt
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
