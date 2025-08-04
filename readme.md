@@ -8,7 +8,7 @@ A full-stack application for managing car wash operations with vehicle entry, qu
 1. Navigate to the backend folder
 2. Run `npm install`
 3. Create a `.env` file with your MongoDB Atlas connection string
-4. Run `npm start` or `npm run dev` for development
+4. Run `npm run dev` for development
 
 ### Frontend Setup
 The frontend is served statically by the Express server. Just open http://localhost:3000 in your browser.
