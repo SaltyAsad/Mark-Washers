@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
 const washSchema = new mongoose.Schema({
+  //user id
+ 
   vehicleType: {
     type: String,
     enum: ['Car', 'Bike', 'Truck'],
@@ -37,5 +39,6 @@ const washSchema = new mongoose.Schema({
     default: 'Pending'
   }
 });
+
 
 module.exports = mongoose.model('Wash', washSchema);

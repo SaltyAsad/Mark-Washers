@@ -1,7 +1,14 @@
-//import { auth.middleware } from '../middleware/auth';
+
 const express = require('express');
 const router = express.Router();
-const Wash = require('../models/Wash');
+const Wash = require('../models/Wash.js');
+const User = require('../models/User.js');
+const apierror = require('../utils/apierror.js');
+const apiresponse = require('../utils/apiresponse.js');
+const asynchandler = require('../utils/asynchandler.js');
+const mongoose = require('mongoose');
+const registerUser = require('../controllers/user.controller.js').registerUser;
+const loginUser = require('../controllers/user.controller.js').loginUser;
 
 let tokenCounter = 1000;
 let laneAssignment = 1;
@@ -31,7 +38,7 @@ router.post('/wash', async (req, res) => {
       washTime: config.time
     });
     
-    await wash.save();
+    wash.save();
     res.status(201).json(wash);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -87,5 +94,8 @@ router.get('/wash/:id/receipt', async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
+
+router.route("/user/login").get(loginUser)
+router.route("/user/register").post(registerUser);
 
 module.exports = router;
