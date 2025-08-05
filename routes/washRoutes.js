@@ -10,6 +10,7 @@ const mongoose = require('mongoose');
 const  verifyJWT  = require('../middlewares/auth.middleware.js').verifyJWT;
 const registerUser = require('../controllers/user.controller.js').registerUser;
 const loginUser = require('../controllers/user.controller.js').loginUser;
+const logOutUser = require('../controllers/user.controller.js').logOutUser;
 
 let tokenCounter = 1000;
 let laneAssignment = 1;
@@ -97,6 +98,9 @@ router.get('/wash/:id/receipt', async (req, res) => {
 });
 
 router.route("/user/login").get(loginUser)
+
 router.route("/user/register").post(registerUser);
+
+router.route("/user/logout").post(verifyJWT,logOutUser)
 
 module.exports = router;

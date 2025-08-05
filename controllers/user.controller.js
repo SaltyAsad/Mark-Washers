@@ -103,7 +103,36 @@ const loginUser = asynchandler(async (req,res) => {
   }
 })
 
-module.exports = {registerUser,loginUser,generateAccessAndRefreshTokens};
+const logOutUser = asynchandler(async(req,res) => {
+    try {
+        await User.findByIdAndUpdate(
+            //console.log("req.user._id",req.user._id),
+            req.user._id,
+            {
+                $unset: {
+                    refreshtoken: 1
+                }
+            },
+            {
+                new: true
+            }
+        )
+        const options = {
+            httpOnly: true,
+            secure: true
+        }
+        return res
+        .status(200)
+        .clearCookie("accesstoken",options)
+        .cookie("refreshtoken",options)
+        .json(new apiresponse(200,{},"User Logged Out Successfully"))
+
+    } catch (error) {
+       throw new apierror(500,error?.message) 
+    }
+})
+
+module.exports = {registerUser,loginUser,generateAccessAndRefreshTokens,logOutUser};
 
 /*
     
