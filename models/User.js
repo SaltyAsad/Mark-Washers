@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
  
@@ -32,8 +33,6 @@ userSchema.methods.generateAccessToken = function(){
     return jwt.sign({
         _id:this._id,
         email:this.email,
-        username: this.username,
-        fullname: this.fullname
     },
     process.env.ACCESS_TOKEN_SECRET,
     {
@@ -59,6 +58,12 @@ module.exports = mongoose.model('User', userSchema);
     "password":"1234567"
 
     "email" :"asad@gmail.com",
+    "password":"1234"
+
+    "email" :"billu@gmail.com",
+    "password":"1234"
+
+    "email" :"hamza@gmail.com",
     "password":"1234"
     
     */

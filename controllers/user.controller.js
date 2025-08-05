@@ -4,12 +4,20 @@ const apierror = require('../utils/apierror.js');
 const apiresponse = require('../utils/apiresponse.js');
 const asynchandler = require('../utils/asynchandler.js');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 
 const generateAccessAndRefreshTokens = async(userid) => {
+    
+    
     try {
         const user = await User.findById(userid)
+        // console.log(user);
+        // console.log("user id",userid);
         const accesstoken = user.generateAccessToken()
+        //console.log("accesstoken",accesstoken);
         const refreshtoken = user.generateRefToken()
+        //console.log("refreshtoken",refreshtoken);
+        
 
         user.refreshtoken=refreshtoken
         await user.save({ validateBeforeSave: false })
@@ -17,7 +25,7 @@ const generateAccessAndRefreshTokens = async(userid) => {
         return {accesstoken,refreshtoken}
 
     } catch (error) {
-        throw new apierror(500,"something went wrong while generating access and refresh tokens")
+        throw new apierror(500,error?.message)
     }
 }
 
@@ -54,7 +62,7 @@ const loginUser = asynchandler(async (req,res) => {
         throw new apierror(400,"password and email is required")
     }
     const user = await User.findOne({email});
-    console.log("ye user ki email",user);
+   // console.log("ye user ki email",user);
 
     if (!user) {
         throw new apierror(404,"User does not exist")
@@ -69,7 +77,7 @@ const loginUser = asynchandler(async (req,res) => {
     const {accesstoken,refreshtoken} = await generateAccessAndRefreshTokens(user._id)
 
     const loggedInUser = await User.findById(user._id).select("-password -refreshtoken")
-    
+
     const options = {
         httpOnly: true,
         secure: true
@@ -98,7 +106,6 @@ const loginUser = asynchandler(async (req,res) => {
 module.exports = {registerUser,loginUser,generateAccessAndRefreshTokens};
 
 /*
-    controller me 2
-    model me 1
+    
     
 */

@@ -1,10 +1,10 @@
-import { apierror } from "../utils/apierror.js"
-import { asynchandler } from "../utils/asynchandler.js"
-import jwt from "jsonwebtoken"
-import { User } from "../models/user.model.js"
-import { urlencoded } from "express"
+const  apierror = require("../utils/apierror.js")
+const  asynchandler = require("../utils/asynchandler.js")
+const  jwt = require("jsonwebtoken")
+const User = require("../models/User.js")
+const urlencoded = require("body-parser").urlencoded
 
-export const verifyJWT =asynchandler(async(req,_,next) => {
+ const verifyJWT =asynchandler(async(req,_,next) => {
     try {
         const token = req.cookies?.accesstoken || req.header("Authorization")?.replace("Bearer ","" )
     
@@ -27,3 +27,4 @@ export const verifyJWT =asynchandler(async(req,_,next) => {
     }
 
 })
+module.exports = { verifyJWT }

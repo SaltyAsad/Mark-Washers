@@ -7,6 +7,7 @@ const apierror = require('../utils/apierror.js');
 const apiresponse = require('../utils/apiresponse.js');
 const asynchandler = require('../utils/asynchandler.js');
 const mongoose = require('mongoose');
+const  verifyJWT  = require('../middlewares/auth.middleware.js').verifyJWT;
 const registerUser = require('../controllers/user.controller.js').registerUser;
 const loginUser = require('../controllers/user.controller.js').loginUser;
 
