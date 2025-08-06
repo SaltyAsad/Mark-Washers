@@ -1,4 +1,3 @@
-
 const express = require('express');
 const router = express.Router();
 const Wash = require('../models/Wash.js');
@@ -12,7 +11,7 @@ const registerUser = require('../controllers/user.controller.js').registerUser;
 const loginUser = require('../controllers/user.controller.js').loginUser;
 const logOutUser = require('../controllers/user.controller.js').logOutUser;
 
-let tokenCounter = 1000;
+let tokenCounter = 4000;
 let laneAssignment = 1;
 
 const vehicleConfig = {
@@ -21,8 +20,10 @@ const vehicleConfig = {
   'Truck': { time: 20, price: 800 }
 };
 
-router.post('/wash', async (req, res) => {
+router.post('/wash',verifyJWT, async (req, res) => {
   try {
+ //   console.log("working");2 bhj ke check
+    
     const { vehicleType, numberPlate } = req.body;
     
     const tokenNumber = `T${tokenCounter++}`;
@@ -32,6 +33,7 @@ router.post('/wash', async (req, res) => {
     const config = vehicleConfig[vehicleType];
     
     const wash = new Wash({
+      user: req.user._id, 
       vehicleType,
       numberPlate,
       tokenNumber,
@@ -47,16 +49,21 @@ router.post('/wash', async (req, res) => {
   }
 });
 
-router.get('/wash', async (req, res) => {
+router.get('/user-wash',verifyJWT, async (req, res) => {
   try {
-    const { status } = req.query;
-    const filter = status ? { status } : {};
-    const washes = await Wash.find(filter).sort({ entryTime: -1 });
+    console.log("Fetching user washes");
+    
+    const user = req.user._id
+    console.log("user id", user);
+    
+    const washes = await Wash.find({user}).sort({ entryTime: -1 });
     res.json(washes);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 });
+
+
 
 router.patch('/wash/:id/complete', async (req, res) => {
   try {
@@ -99,7 +106,7 @@ router.get('/wash/:id/receipt', async (req, res) => {
 
 router.route("/user/login").get(loginUser)
 
-router.route("/user/register").post(registerUser);
+router.route("/user/register").post(registerUser)
 
 router.route("/user/logout").post(verifyJWT,logOutUser)
 

@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const washSchema = new mongoose.Schema({
-  //user id
- 
+  user: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+  },
   vehicleType: {
     type: String,
     enum: ['Car', 'Bike', 'Truck'],
@@ -42,3 +45,6 @@ const washSchema = new mongoose.Schema({
 
 
 module.exports = mongoose.model('Wash', washSchema);
+
+//ask userid or phir front kese chalega 
+// claude ask public folder me login ka or index me swithcing kese kearni
