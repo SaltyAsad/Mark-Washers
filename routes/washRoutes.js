@@ -11,7 +11,7 @@ const registerUser = require('../controllers/user.controller.js').registerUser;
 const loginUser = require('../controllers/user.controller.js').loginUser;
 const logOutUser = require('../controllers/user.controller.js').logOutUser;
 
-let tokenCounter = 4000;
+let tokenCounter = 5000;
 let laneAssignment = 1;
 
 const vehicleConfig = {
@@ -51,7 +51,7 @@ router.post('/wash',verifyJWT, async (req, res) => {
 
 router.get('/user-wash',verifyJWT, async (req, res) => {
   try {
-    console.log("Fetching user washes");
+  //  console.log("Fetching user washes",res);
     
     const user = req.user._id
     console.log("user id", user);
@@ -63,7 +63,14 @@ router.get('/user-wash',verifyJWT, async (req, res) => {
   }
 });
 
-
+router.get('/testRoute', async (req, res) => {
+  try {
+    // const washes = await Wash.find().sort({ entryTime: -1 });
+    res.json({ message: 'Welcome to Home from Backend' });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
 
 router.patch('/wash/:id/complete', async (req, res) => {
   try {
@@ -104,7 +111,7 @@ router.get('/wash/:id/receipt', async (req, res) => {
   }
 });
 
-router.route("/user/login").get(loginUser)
+router.route("/user/login").post(loginUser) // changed GET > POST
 
 router.route("/user/register").post(registerUser)
 

@@ -65,6 +65,9 @@ module.exports = mongoose.model('User', userSchema);
 
     "email" :"hamza@gmail.com",
     "password":"1234"
+
+    "email" :"asad11@gmail.com",
+    "password":"1234"
     
     */
     
